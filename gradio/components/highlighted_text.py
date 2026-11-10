@@ -142,7 +142,7 @@ class HighlightedText(Component):
         """
         if payload is None:
             return None
-        return payload.model_dump()  # type: ignore
+        return [(t.token, t.class_or_confidence) for t in payload.root]
 
     def postprocess(
         self, value: list[tuple[str, str | float | None]] | dict | None

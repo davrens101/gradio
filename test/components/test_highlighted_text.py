@@ -190,3 +190,14 @@ class TestHighlightedText:
             {"token": "ll", "class_or_confidence": "non"},
             {"token": "oooo", "class_or_confidence": "vowel"},
         ]
+
+    def test_preprocess(self):
+        component = gr.HighlightedText()
+        assert component.preprocess(None) is None
+
+        raw_tokens = [("Wolfgang", "PER"), (" lives in ", None), ("Berlin", "LOC")]
+        postprocessed = component.postprocess(raw_tokens)
+        preprocessed = component.preprocess(postprocessed)
+        assert preprocessed == raw_tokens
+        # Verify round trip works with postprocess
+        assert component.postprocess(preprocessed) == postprocessed
